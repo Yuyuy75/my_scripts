@@ -12,10 +12,17 @@ viet_to_viet    = ",3,0,0.html"
 search_url      = url_prefix + word + eng_to_viet
 res             = requests.get( search_url )
 
-word_len            = len( word )
 word_title          = res.text.find( "word_title" )
-skip_word_title     = len( "word_title\">\n\t" )
-start_index_word    = word_title + skip_word_title
+skip_to_word        = len( "word_title\">\n\t" )
+start_index_word    = word_title + skip_to_word
+word_len            = len( word )
 end_index_word      = start_index_word + word_len
+
+print( res.text[start_index_word:end_index_word] )
+
+pronounce           = res.text.find( "pronounce" )
+skip_to_word        = len( "pronounce\">/" )
+start_index_word    = pronounce + skip_to_word
+end_index_word      = res.text.find( "/<", pronounce )
 
 print( res.text[start_index_word:end_index_word] )
