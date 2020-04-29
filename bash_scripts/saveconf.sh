@@ -1,4 +1,5 @@
 #!/bin/bash
+# basic script that copies dot config files to a centralized directory for saving in a github repo
 
 vimrc_path=/home/tri/.vimrc
 vimrc_save_path=/home/tri/docs/dotfiles/
