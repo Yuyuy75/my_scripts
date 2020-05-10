@@ -1,19 +1,23 @@
 #!/bin/bash
 
 brightness_path='/sys/class/backlight/intel_backlight/brightness'
-# for future reference, this is how you get a value into a variable...
+#   for future reference, this is how you get a... 
+#+  value into a variable
 brightness=$(cat "/sys/class/backlight/intel_backlight/max_brightness")
 max_brightness=$brightness
 
 # need spaces between brackets and inside
 if [ $# -eq 1 ]
     then
-sudo sh -c "echo $1 > $brightness_path"
+    brightness_percent=$( echo "scale=0; ($1 % 100 * $max_brightness)/1" | bc )
+    echo $brightness_percent
+    sudo sh -c "echo $brightness_percent > $brightness_path"
 exit 0
 fi
 
-echo -e "wrong number of args\n\
-usage: script [1 - $max_brightness]"
+echo -e "Wrong number of arguments!\n\n\
+Usage: script [1 - $max_brightness]"
 exit 1
 # print error if $1 is greater than max_brightness
 # print error if $# is not exactly 1
+# add -h and --help flag
