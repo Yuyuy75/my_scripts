@@ -17,4 +17,5 @@ first_ln=$(awk 'NF == 6 { print NR; exit; }' "$my_file")
 
 awk -v start="$first_ln" '
 BEGIN {OFS = "\t"; offset1 = 2; offset2 = 3} 
-{ print(NR == start + offset1 || NR == start + offset2 ? $1 $2 $3 "F F F" : $0) }' "$my_file"
+{print(NR == start + offset1 || NR == start + offset2 ? $1 $2 $3 "F F F" : $0); if(NR == start + offset1) offset1 += 4; if(NR == start + offset2) offset2 += 4};
+' "$my_file"
