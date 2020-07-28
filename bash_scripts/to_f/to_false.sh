@@ -10,4 +10,11 @@
 # TODO: change to allow for processing unlimited files, put into sep dir
 my_file="$1"
 
-awk '{ print(NF == 6 ? $1 "\t" $2 "\t" $3 "\t" "F F F" : $0) }' "$my_file"
+first_ln=$(awk 'NF == 6 { print NR; exit; }' "$my_file")
+
+# TESTING 123
+# echo "$first_ln"
+
+awk -v start="$first_ln" '
+BEGIN {OFS = "\t"; offset1 = 2; offset2 = 3} 
+{ print(NR == start + offset1 || NR == start + offset2 ? $1 $2 $3 "F F F" : $0) }' "$my_file"
